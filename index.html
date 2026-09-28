@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tu Nombre · Portfolio</title>
+<meta name="description" content="Portfolio profesional de Tu Nombre">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f4f1; --panel:#e6ebe6; --ink:#1c2b2e; --muted:#5b6b6d;
+  --line:#c9d3cc; --accent:#0e6b66; --accent-ink:#ffffff;
+  --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#121b1d; --panel:#1a2629; --ink:#e8eeeb; --muted:#9aacaa; --line:#2d3d40; --accent:#5fc3b8; --accent-ink:#0b1517}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.65 var(--body)}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+.layout{display:grid;grid-template-columns:minmax(280px,38%) 1fr;min-height:100vh}
+.side{position:sticky;top:0;height:100vh;padding:3.5rem 3rem;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--line)}
+.side h1{font:800 clamp(3rem,6.5vw,6rem)/.92 var(--display);letter-spacing:-.035em;margin:0 0 1.25rem}
+.role{font:500 1.25rem/1.4 var(--display);margin:0;color:var(--accent)}
+nav ul{list-style:none;margin:0;padding:0;display:grid;gap:.35rem}
+nav a{display:inline-block;padding:.2rem 0;color:var(--muted);text-decoration:none;font-weight:500}
+nav a:hover,nav a[aria-current="true"]{color:var(--ink);box-shadow:inset 0 -2px var(--accent)}
+.social{display:flex;gap:1.25rem;flex-wrap:wrap;margin-top:1.5rem;font-size:.95rem}
+
+main{padding:3.5rem clamp(1.5rem,5vw,5rem) 5rem;max-width:56rem}
+section{padding-bottom:4.5rem}
+h2{font:700 2rem/1.15 var(--display);letter-spacing:-.02em;margin:0 0 1.5rem}
+p{max-width:65ch}
+.lead{font-size:1.3rem;line-height:1.55}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1.5rem;margin:2rem 0 0;padding-top:1.5rem;border-top:1px solid var(--line)}
+.facts dt{font-size:.85rem;color:var(--muted)}
+.facts dd{margin:.15rem 0 0;font-weight:600}
+
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);padding:.7rem 1.2rem;border-radius:6px;font-weight:600;text-decoration:none;border:0;cursor:pointer;font:600 1rem var(--body)}
+.btn.ghost{background:transparent;color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
+.btn:hover{filter:brightness(1.1)}
+.row{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem}
+
+.cv-frame{width:100%;height:34rem;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+
+/* Trayectoria: es una secuencia, por eso va en línea de tiempo */
+.timeline{list-style:none;margin:0;padding:0 0 0 1.5rem;border-left:2px solid var(--line)}
+.timeline li{position:relative;padding:0 0 2rem 1rem}
+.timeline li::before{content:"";position:absolute;left:-1.5rem;top:.5rem;width:.75rem;height:.75rem;margin-left:-.4rem;border-radius:50%;background:var(--accent)}
+.timeline h3{margin:0;font:700 1.15rem var(--display)}
+.timeline .when{color:var(--muted);font-size:.9rem;margin:.1rem 0 .4rem}
+
+/* Proyectos */
+.filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.chip{border:1px solid var(--line);background:transparent;color:var(--ink);padding:.35rem .9rem;border-radius:999px;cursor:pointer;font:500 .95rem var(--body)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#projects{border-top:1px solid var(--line)}
+details.project{border-bottom:1px solid var(--line)}
+details.project summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:4.5rem 1fr auto;gap:1rem;align-items:baseline;padding:1.25rem 0}
+details.project summary::-webkit-details-marker{display:none}
+details.project summary:hover h3{color:var(--accent)}
+.year{color:var(--muted);font-variant-numeric:tabular-nums}
+.project h3{margin:0;font:700 1.35rem/1.2 var(--display);letter-spacing:-.01em}
+.tag{color:var(--muted);font-size:.9rem}
+.chev{transition:transform .2s}
+details[open] .chev{transform:rotate(90deg)}
+.detail{padding:0 0 1.75rem 5.5rem}
+.detail img{max-width:100%;border-radius:6px;margin:.5rem 0 1rem;border:1px solid var(--line)}
+.files{list-style:none;margin:1rem 0 0;padding:0;display:grid;gap:.4rem}
+.files a{display:inline-flex;gap:.5rem;align-items:center;padding:.4rem .8rem;background:var(--panel);border-radius:6px;text-decoration:none;font-weight:500;font-size:.95rem}
+.files a:hover{box-shadow:inset 0 0 0 2px var(--accent)}
+.skills{display:flex;flex-wrap:wrap;gap:.5rem;list-style:none;padding:0;margin:0}
+.skills li{background:var(--panel);padding:.3rem .8rem;border-radius:6px;font-weight:500;font-size:.95rem}
+footer{color:var(--muted);font-size:.9rem}
+
+@media (max-width:860px){
+  .layout{grid-template-columns:1fr}
+  .side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);padding:2.5rem 1.5rem;gap:2rem}
+  nav ul{grid-auto-flow:column;overflow-x:auto;justify-content:start;gap:1.25rem}
+  .detail{padding-left:0}
+  details.project summary{grid-template-columns:3.5rem 1fr auto}
+  .cv-frame{height:26rem}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <header class="side">
+    <div>
+      <!-- 1. CAMBIA TU NOMBRE Y PROFESIÓN -->
+      <h1>Tu Nombre Apellido</h1>
+      <p class="role">Tu profesión o especialidad</p>
+      <div class="social">
+        <a href="mailto:tu@email.com">Email</a>
+        <a href="https://www.linkedin.com/in/tu-usuario" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/tu-usuario" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+    <nav aria-label="Secciones">
+      <ul>
+        <li><a href="#sobre-mi">Sobre mí</a></li>
+        <li><a href="#curriculum">Currículum</a></li>
+        <li><a href="#trayectoria">Trayectoria</a></li>
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#habilidades">Habilidades</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- 2. SOBRE MÍ -->
+    <section id="sobre-mi">
+      <h2>Sobre mí</h2>
+      <p class="lead">Escribe aquí una presentación breve: quién eres, a qué te dedicas y qué tipo de trabajo te interesa.</p>
+      <p>Añade un segundo párrafo con tu enfoque de trabajo, lo que te diferencia y lo que buscas ahora mismo.</p>
+      <dl class="facts">
+        <div><dt>Ubicación</dt><dd>Girona, Cataluña</dd></div>
+        <div><dt>Idiomas</dt><dd>Español, Català, English</dd></div>
+        <div><dt>Disponibilidad</dt><dd>Abierto/a a propuestas</dd></div>
+      </dl>
+    </section>
+
+    <!-- 3. CURRÍCULUM: guarda tu PDF en files/cv.pdf -->
+    <section id="curriculum">
+      <h2>Currículum</h2>
+      <div class="row">
+        <a class="btn" href="files/cv.pdf" download>Descargar CV (PDF)</a>
+        <a class="btn ghost" href="files/cv.pdf" target="_blank" rel="noopener">Abrir en otra pestaña</a>
+      </div>
+      <iframe class="cv-frame" src="files/cv.pdf" title="Vista previa de mi currículum"></iframe>
+    </section>
+
+    <!-- 4. TRAYECTORIA: edita, duplica o borra bloques <li> -->
+    <section id="trayectoria">
+      <h2>Trayectoria</h2>
+      <ol class="timeline">
+        <li>
+          <h3>Puesto actual · Empresa</h3>
+          <p class="when">2023 – Actualidad</p>
+          <p>Describe en una o dos frases tus responsabilidades y logros principales.</p>
+        </li>
+        <li>
+          <h3>Puesto anterior · Empresa</h3>
+          <p class="when">2020 – 2023</p>
+          <p>Describe qué hiciste y qué resultados conseguiste.</p>
+        </li>
+        <li>
+          <h3>Formación · Universidad o centro</h3>
+          <p class="when">2016 – 2020</p>
+          <p>Título, especialidad y algún dato relevante.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- 5. PROYECTOS: se generan desde la lista PROJECTS del script (abajo) -->
+    <section id="proyectos">
+      <h2>Proyectos y trabajos</h2>
+      <div class="filters" id="filters" role="group" aria-label="Filtrar por categoría"></div>
+      <div id="projects"></div>
+    </section>
+
+    <!-- 6. HABILIDADES -->
+    <section id="habilidades">
+      <h2>Habilidades</h2>
+      <ul class="skills">
+        <li>Habilidad 1</li><li>Habilidad 2</li><li>Habilidad 3</li>
+        <li>Herramienta A</li><li>Herramienta B</li><li>Gestión de proyectos</li>
+      </ul>
+    </section>
+
+    <!-- 7. CONTACTO -->
+    <section id="contacto">
+      <h2>Contacto</h2>
+      <p>¿Tienes una propuesta o quieres saber más de mi trabajo? Escríbeme y te respondo lo antes posible.</p>
+      <div class="row"><a class="btn" href="mailto:tu@email.com">Enviar un email</a></div>
+    </section>
+
+    <footer>© <span id="year"></span> Tu Nombre Apellido</footer>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   AÑADIR UN TRABAJO: copia un bloque { ... } y edítalo.
+   ARCHIVOS ADJUNTOS: guarda los ficheros en la carpeta /files
+   y ponlos en "files" con su ruta (ej. "files/informe.pdf").
+   ============================================================ */
+const PROJECTS = [
+  {
+    title: "Nombre del proyecto 1",
+    year: 2025,
+    category: "Desarrollo",
+    summary: "Una frase que explique qué es y qué hiciste.",
+    description: "Detalla el contexto, tu papel, las herramientas usadas y el resultado obtenido.",
+    image: "",                       // opcional: "files/captura1.png"
+    links: [{ label: "Ver proyecto", url: "https://ejemplo.com" }],
+    files: [
+      { label: "Memoria del proyecto (PDF)", path: "files/proyecto1.pdf" }
+    ]
+  },
+  {
+    title: "Nombre del proyecto 2",
+    year: 2024,
+    category: "Diseño",
+    summary: "Otra frase breve sobre este trabajo.",
+    description: "Cuenta qué problema resolvía y cómo lo abordaste.",
+    image: "",
+    links: [],
+    files: [
+      { label: "Presentación (PPTX)", path: "files/proyecto2.pptx" },
+      { label: "Hoja de datos (XLSX)", path: "files/proyecto2.xlsx" }
+    ]
+  },
+  {
+    title: "Nombre del proyecto 3",
+    year: 2022,
+    category: "Investigación",
+    summary: "Publicación, estudio o informe.",
+    description: "Resume el objetivo, la metodología y las conclusiones.",
+    image: "",
+    links: [{ label: "Repositorio", url: "https://github.com/tu-usuario/repo" }],
+    files: []
+  }
+];
+
+const $ = (s) => document.querySelector(s);
+const list = $("#projects"), filters = $("#filters");
+let active = "Todos";
+
+const esc = (t) => String(t).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function render(){
+  list.innerHTML = PROJECTS
+    .filter(p => active === "Todos" || p.category === active)
+    .sort((a,b) => b.year - a.year)
+    .map(p => `
+      <details class="project">
+        <summary>
+          <span class="year">${esc(p.year)}</span>
+          <span><h3>${esc(p.title)}</h3><span class="tag">${esc(p.category)} — ${esc(p.summary)}</span></span>
+          <span class="chev" aria-hidden="true">›</span>
+        </summary>
+        <div class="detail">
+          <p>${esc(p.description)}</p>
+          ${p.image ? `<img src="${esc(p.image)}" alt="Captura de ${esc(p.title)}" loading="lazy">` : ""}
+          ${p.links.length ? `<div class="row">${p.links.map(l => `<a class="btn ghost" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join("")}</div>` : ""}
+          ${p.files.length ? `<ul class="files">${p.files.map(f => `<li><a href="${esc(f.path)}" download>Descargar: ${esc(f.label)}</a></li>`).join("")}</ul>` : ""}
+        </div>
+      </details>`).join("") || "<p>No hay trabajos en esta categoría.</p>";
+}
+
+function renderFilters(){
+  const cats = ["Todos", ...new Set(PROJECTS.map(p => p.category))];
+  filters.innerHTML = cats.map(c => `<button class="chip" aria-pressed="${c === active}" data-c="${esc(c)}">${esc(c)}</button>`).join("");
+}
+filters.addEventListener("click", e => {
+  const b = e.target.closest("button"); if(!b) return;
+  active = b.dataset.c; renderFilters(); render();
+});
+
+/* Resalta en el menú la sección visible */
+const links = [...document.querySelectorAll("nav a")];
+const io = new IntersectionObserver(entries => {
+  entries.forEach(en => { if(en.isIntersecting){
+    links.forEach(a => a.setAttribute("aria-current", a.getAttribute("href") === "#" + en.target.id));
+  }});
+}, { rootMargin: "-40% 0px -55% 0px" });
+document.querySelectorAll("main section").forEach(s => io.observe(s));
+
+$("#year").textContent = new Date().getFullYear();
+renderFilters(); render();
+</script>
+</body>
+</html>
